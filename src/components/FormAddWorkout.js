@@ -3,7 +3,7 @@ import { useState } from "react";
 import Logo from "./Logo";
 import Button from "./Button";
 
-function FormAddWorkout({ onAddWorkout }) {
+function FormAddWorkout({ onAddWorkout, generateId }) {
   const [muscle, setMuscle] = useState("");
   const [date, setDate] = useState("");
 
@@ -14,37 +14,37 @@ function FormAddWorkout({ onAddWorkout }) {
 
     const id = crypto.randomUUID();
 
-    function generateId() {
-      return crypto.randomUUID();
-    }
+    // function generateId() {
+    //   return crypto.randomUUID();
+    // }
 
     const newWorkout = {
       id,
       muscle,
       date,
       exercises: [
-        {
-          exerciseId: generateId(),
-          exercise: "X",
-          series: [
-            {
-              seriesId: generateId(),
-              reps: 0,
-              peso: 0,
-            },
-          ],
-        },
-        {
-          exerciseId: generateId(),
-          exercise: "X",
-          series: [
-            {
-              seriesId: generateId(),
-              reps: 0,
-              peso: 0,
-            },
-          ],
-        },
+        // {
+        //   exerciseId: generateId,
+        //   exercise: "Push Ups",
+        //   series: [
+        //     {
+        //       seriesId: generateId,
+        //       reps: 0,
+        //       peso: 0,
+        //     },
+        //   ],
+        // },
+        // {
+        //   exerciseId: generateId,
+        //   exercise: "Curl",
+        //   series: [
+        //     {
+        //       seriesId: generateId,
+        //       reps: 0,
+        //       peso: 0,
+        //     },
+        //   ],
+        // },
       ],
     };
 

@@ -8,9 +8,6 @@ function FormAddExercises({
 }) {
   return (
     <div className="form-add form-add-exercise">
-      <div className="exercises-title">
-        <Logo>Exercises</Logo>
-      </div>
       <ExerciseList
         workouts={workouts}
         showFormAddExercise={showFormAddExercise}

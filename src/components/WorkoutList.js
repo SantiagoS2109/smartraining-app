@@ -13,10 +13,9 @@ function WorkoutList({
           workout={workout}
           muscle={workout.muscle}
           date={workout.date}
-          id={workout.id}
+          key={workout.id}
           onSelection={onSelection}
           selectedWorkout={selectedWorkout}
-          // onShowFormAddExercises={onShowFormAddExercises}
         />
       ))}
     </ul>
