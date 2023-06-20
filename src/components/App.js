@@ -3,7 +3,7 @@ import { useState } from "react";
 import Logo from "./Logo";
 import WorkoutList from "./WorkoutList";
 import Button from "./Button";
-import FormAddExercises from "./FormAddExercises";
+import ExerciseList from "./ExerciseList";
 import FormAddWorkout from "./FormAddWorkout";
 
 const initialWorkouts = [
@@ -111,12 +111,16 @@ function App() {
     setShowAddWorkout(false);
   }
 
-  function handleShowFormAddExercises() {
+  function handleSetShowFormAddExercises() {
     setShowFormAddExercise((show) => !show);
   }
 
   function handleSelection(workout) {
     setSelectedWorkout((cur) => (cur?.id === workout.id ? null : workout));
+  }
+
+  function generateId() {
+    return crypto.randomUUID();
   }
 
   return (
@@ -135,10 +139,14 @@ function App() {
         </Button>
       </div>
       {selectedWorkout && (
-        <FormAddExercises
+        <ExerciseList
           workouts={workouts}
           showFormAddExercise={showFormAddExercise}
-          onShowFormAddExercise={handleShowFormAddExercises}
+          onShowFormAddExercise={handleSetShowFormAddExercises}
+          selectedWorkout={selectedWorkout}
+          setSelectedWorkout={setSelectedWorkout}
+          generateId={generateId}
+          setWorkouts={setWorkouts}
         />
       )}
     </div>
