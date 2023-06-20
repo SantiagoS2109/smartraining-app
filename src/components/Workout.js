@@ -1,7 +1,14 @@
 import { Barbell } from "@phosphor-icons/react";
 import Button from "./Button";
 
-function Workout({ workout, muscle, date, onSelection, selectedWorkout }) {
+function Workout({
+  muscle,
+  date,
+  // onShowFormAddExercises,
+  workout,
+  onSelection,
+  selectedWorkout,
+}) {
   const isSelected = selectedWorkout?.id === workout.id;
 
   return (
