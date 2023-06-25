@@ -13,12 +13,12 @@ function ExerciseList({
   setWorkouts,
   setSelectedWorkout,
 }) {
-  const [curExercises, setCurExercises] = useState(selectedWorkout.exercises);
+  // const [curExercises, setCurExercises] = useState(selectedWorkout.exercises);
   const [titleExercise, setTitleExercise] = useState("");
 
-  console.log(curExercises);
-  console.log(selectedWorkout.exercises);
-  const workoutExercises = selectedWorkout.exercises;
+  // console.log(curExercises);
+  // console.log(selectedWorkout.exercises);
+  // const workoutExercises = selectedWorkout.exercises;
 
   console.log("///////////////////////////////////////");
 
@@ -41,21 +41,46 @@ function ExerciseList({
       ],
     };
 
-    workoutExercises.push(newExercise);
+    const prueba = [...selectedWorkout.exercises, newExercise];
+    setSelectedWorkout({ ...selectedWorkout, exercises: prueba });
 
-    // setSelectedWorkout([...selectedWorkout.exercises, newExercise]);
+    console.log(prueba);
+    console.log(selectedWorkout);
 
-    console.log(selectedWorkout.exercises);
+    const updatedWorkouts = workouts.map((workout) =>
+      workout?.id === selectedWorkout?.id
+        ? {
+            ...workout,
+            exercises: selectedWorkout.exercises,
+          }
+        : workout
+    );
 
-    setCurExercises((cur) => [...cur, newExercise]);
-    // setCurExercises((exercises) => [...exercises, newExercise]);
+    setWorkouts(updatedWorkouts);
 
-    // onAddExercise();
+    // setWorkouts([...workouts]);
 
-    // onSetShowFormAddExercise(false);
+    // setWorkouts();
+
+    // const yepa = workouts.map((workout) => {
+    //   workout.id === selectedWorkout.id ? workout : false;
+    // });
+
+    // console.log(yepa);
+    // console.log(yepa[0].exercises);
+
+    // // yepa[0].exercises.push(newExercise);
+
+    // console.log(yepa[0].exercises);
+    ///////////////////////////////////////
+
+    // setCurExercises((cur) => [...cur, newExercise]);
+
     setTitleExercise("");
     onShowFormAddExercise();
   }
+
+  console.log(selectedWorkout);
 
   return (
     <div className="exercises">
@@ -64,14 +89,15 @@ function ExerciseList({
           <Logo>{`Exercises ${selectedWorkout.muscle}`}</Logo>
         </div>
         <div className="exercises-list">
-          {curExercises.map((exercise) => console.log(exercise))}
-          {curExercises.map((exercise) => (
+          {/* {console.log(curExercises)} */}
+          {/* {curExercises.map((exercise) => console.log(exercise))} */}
+          {selectedWorkout.exercises.map((exercise) => (
             <Exercise
               exercise={exercise}
               title={exercise.exercise}
               series={exercise.series}
               selectedWorkout={selectedWorkout}
-              key={exercise.Id}
+              key={exercise.exerciseId}
             />
           ))}
         </div>

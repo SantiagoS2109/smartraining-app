@@ -23,28 +23,17 @@ function FormAddWorkout({ onAddWorkout }) {
       muscle,
       date,
       exercises: [
-        {
-          exerciseId: generateId(),
-          exercise: "X",
-          series: [
-            {
-              seriesId: generateId(),
-              reps: 0,
-              peso: 0,
-            },
-          ],
-        },
-        {
-          exerciseId: generateId(),
-          exercise: "X",
-          series: [
-            {
-              seriesId: generateId(),
-              reps: 0,
-              peso: 0,
-            },
-          ],
-        },
+        // {
+        //   exerciseId: generateId(),
+        //   exercise: "X",
+        //   series: [
+        //     {
+        //       seriesId: generateId(),
+        //       reps: 0,
+        //       peso: 0,
+        //     },
+        //   ],
+        // },
       ],
     };
 

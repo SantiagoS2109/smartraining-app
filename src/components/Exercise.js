@@ -11,10 +11,11 @@ function Exercise({ title, series, selectedWorkout }) {
     <div className="exercise">
       <div className="exercise-title">
         <Circle weight="bold" size={28} />
-        {console.log(title)}
         <h2>{title}</h2>
       </div>
-      <ul>
+
+      {/* ESTE DIV ERA UN <UL></UL>, SI DA PROBLEMA, CAMBIAR DE VUELTA */}
+      <div>
         <div className="sets-label">
           <p className="sets">Sets</p>
           <p>Weight</p>
@@ -23,7 +24,7 @@ function Exercise({ title, series, selectedWorkout }) {
         <Serie />
         <Serie />
         <Button classStyle={"button-serie"}>+</Button>
-      </ul>
+      </div>
     </div>
   );
 }
