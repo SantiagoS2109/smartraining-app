@@ -13,38 +13,44 @@ function ExerciseList({
   setWorkouts,
   setSelectedWorkout,
 }) {
-  // const [curExercises, setCurExercises] = useState(selectedWorkout.exercises);
   const [titleExercise, setTitleExercise] = useState("");
 
-  // console.log(curExercises);
-  // console.log(selectedWorkout.exercises);
-  // const workoutExercises = selectedWorkout.exercises;
-
-  console.log("///////////////////////////////////////");
+  const newExercise = {
+    exerciseId: generateId(),
+    exercise: titleExercise,
+    sets: [
+      {
+        setId: 1,
+        reps: 12,
+        peso: 5,
+      },
+      {
+        setId: 2,
+        reps: 10,
+        peso: 7,
+      },
+      {
+        setId: 3,
+        reps: 8,
+        peso: 9,
+      },
+      {
+        setId: 4,
+        reps: 6,
+        peso: 10,
+      },
+    ],
+  };
 
   function handleSubmit(e) {
     e.preventDefault();
 
     if (!titleExercise) return;
 
-    // curExercises.map((exercise) => console.log(exercise));
+    const updatedExercises = [...selectedWorkout.exercises, newExercise];
+    setSelectedWorkout({ ...selectedWorkout, exercises: updatedExercises });
 
-    const newExercise = {
-      exerciseId: generateId(),
-      exercise: titleExercise,
-      series: [
-        {
-          seriesId: generateId(),
-          reps: 0,
-          peso: 0,
-        },
-      ],
-    };
-
-    const prueba = [...selectedWorkout.exercises, newExercise];
-    setSelectedWorkout({ ...selectedWorkout, exercises: prueba });
-
-    console.log(prueba);
+    console.log(updatedExercises);
     console.log(selectedWorkout);
 
     const updatedWorkouts = workouts.map((workout) =>
@@ -58,24 +64,6 @@ function ExerciseList({
 
     setWorkouts(updatedWorkouts);
 
-    // setWorkouts([...workouts]);
-
-    // setWorkouts();
-
-    // const yepa = workouts.map((workout) => {
-    //   workout.id === selectedWorkout.id ? workout : false;
-    // });
-
-    // console.log(yepa);
-    // console.log(yepa[0].exercises);
-
-    // // yepa[0].exercises.push(newExercise);
-
-    // console.log(yepa[0].exercises);
-    ///////////////////////////////////////
-
-    // setCurExercises((cur) => [...cur, newExercise]);
-
     setTitleExercise("");
     onShowFormAddExercise();
   }
@@ -86,21 +74,22 @@ function ExerciseList({
     <div className="exercises">
       <div className="form-add form-add-exercise">
         <div className="exercises-title">
-          <Logo>{`Exercises ${selectedWorkout.muscle}`}</Logo>
+          <Logo>{`${selectedWorkout.muscle} workout`}</Logo>
+          <span>{selectedWorkout.date}</span>
         </div>
-        <div className="exercises-list">
+        <ul className="exercises-list">
           {/* {console.log(curExercises)} */}
           {/* {curExercises.map((exercise) => console.log(exercise))} */}
           {selectedWorkout.exercises.map((exercise) => (
             <Exercise
               exercise={exercise}
-              title={exercise.exercise}
-              series={exercise.series}
-              selectedWorkout={selectedWorkout}
               key={exercise.exerciseId}
+              title={exercise.exercise}
+              sets={exercise.sets}
+              selectedWorkout={selectedWorkout}
             />
           ))}
-        </div>
+        </ul>
         {showFormAddExercise && (
           <FormAddExercise
             titleExercise={titleExercise}

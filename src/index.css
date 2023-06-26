@@ -257,8 +257,19 @@ select {
   border-radius: 7px;
 }
 
+.exercises-title {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
 .exercises-title h1 {
   font-size: 2.4rem;
+}
+
+.exercises-title span {
+  font-size: 1.4rem;
 }
 
 .exercise {
@@ -321,15 +332,36 @@ select {
   margin-bottom: 2.4rem;
 }
 
-.sets-label {
+.reps-label {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 0.8rem;
 
   font-size: 1.2rem;
   font-weight: bold;
+
+  margin-bottom: 0.8rem;
 }
 
-.sets {
+.reps {
   grid-column: 2 / 3;
+}
+
+.mb--16 {
+  margin-bottom: 1.6rem;
+}
+
+.button-limpiar {
+  padding: 0.8rem 1.2rem;
+  font-size: 1.2rem;
+
+  margin-bottom: 2.4rem;
+  background-color: #fff;
+  color: #3a3d42;
+  border: 1px solid #3a3d42;
+}
+
+.button-limpiar:hover {
+  background-color: #3a3d42;
+  color: #fff;
 }

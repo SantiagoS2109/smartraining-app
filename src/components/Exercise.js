@@ -1,31 +1,43 @@
 import { Circle } from "@phosphor-icons/react";
-import Button from "./Button";
-import Serie from "./Serie";
+// import Button from "./Button";
+import Set from "./Set";
+import { useState } from "react";
 
-function Exercise({ title, series, selectedWorkout }) {
+function Exercise({ exercise, title, sets, selectedWorkout }) {
   // const sets = selectedWorkout.exercises;
   // console.log(sets);
   // console.log("////////////////////////////////");
 
+  // const sets = [{}];
+
+  console.log(exercise);
+  console.log(sets);
+
   return (
-    <div className="exercise">
+    <li className="exercise">
       <div className="exercise-title">
         <Circle weight="bold" size={28} />
         <h2>{title}</h2>
       </div>
 
-      {/* ESTE DIV ERA UN <UL></UL>, SI DA PROBLEMA, CAMBIAR DE VUELTA */}
       <div>
-        <div className="sets-label">
-          <p className="sets">Sets</p>
+        <div className="reps-label">
+          <p className="reps">Reps</p>
           <p>Weight</p>
         </div>
-        <Serie />
-        <Serie />
-        <Serie />
-        <Button classStyle={"button-serie"}>+</Button>
+        <ul>
+          {sets.map((set, i) => (
+            <Set
+              num={i}
+              key={set.setId}
+              initialReps={set.reps}
+              initialPeso={set.peso}
+            ></Set>
+          ))}
+          {/* <Button classStyle={"button-serie"}>+</Button> */}
+        </ul>
       </div>
-    </div>
+    </li>
   );
 }
 
