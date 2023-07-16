@@ -17,7 +17,7 @@ function ExerciseList({
 
   const newExercise = {
     exerciseId: generateId(),
-    exercise: titleExercise,
+    title: titleExercise,
     sets: [
       {
         setId: 1,
@@ -50,8 +50,8 @@ function ExerciseList({
     const updatedExercises = [...selectedWorkout.exercises, newExercise];
     setSelectedWorkout({ ...selectedWorkout, exercises: updatedExercises });
 
-    console.log(updatedExercises);
-    console.log(selectedWorkout);
+    // console.log(updatedExercises);
+    // console.log(selectedWorkout);
 
     const updatedWorkouts = workouts.map((workout) =>
       workout?.id === selectedWorkout?.id
@@ -62,7 +62,17 @@ function ExerciseList({
         : workout
     );
 
-    setWorkouts(updatedWorkouts);
+    console.log(workouts);
+    setWorkouts((workouts) =>
+      workouts.map((workout) =>
+        workout?.id === selectedWorkout?.id
+          ? {
+              ...workout,
+              exercises: selectedWorkout.exercises,
+            }
+          : workout
+      )
+    );
 
     setTitleExercise("");
     onShowFormAddExercise();
@@ -80,15 +90,24 @@ function ExerciseList({
         <ul className="exercises-list">
           {/* {console.log(curExercises)} */}
           {/* {curExercises.map((exercise) => console.log(exercise))} */}
-          {selectedWorkout.exercises.map((exercise) => (
+          {/* {selectedWorkout.exercises.map((exercise) => (
             <Exercise
-              exercise={exercise}
               key={exercise.exerciseId}
-              title={exercise.exercise}
-              sets={exercise.sets}
+              exercise={exercise}
               selectedWorkout={selectedWorkout}
             />
-          ))}
+          ))} */}
+          {workouts.map(
+            (workout) =>
+              workout.id === selectedWorkout.id &&
+              workout.exercises.map((exercise) => (
+                <Exercise
+                  key={exercise.exerciseId}
+                  exercise={exercise}
+                  selectedWorkout={selectedWorkout}
+                />
+              ))
+          )}
         </ul>
         {showFormAddExercise && (
           <FormAddExercise

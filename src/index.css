@@ -157,6 +157,8 @@ body {
 .form-add-exercise {
   gap: 1.8rem;
   padding: 1.8rem;
+
+  height: calc(100% - 9rem);
 }
 
 .form-add-exercise form {

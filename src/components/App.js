@@ -5,6 +5,7 @@ import WorkoutList from "./WorkoutList";
 import Button from "./Button";
 import ExerciseList from "./ExerciseList";
 import FormAddWorkout from "./FormAddWorkout";
+import Workout from "./Workout";
 
 // {
 //   id: 118836,
@@ -97,8 +98,6 @@ import FormAddWorkout from "./FormAddWorkout";
 let initialWorkouts = [];
 
 function App() {
-  getLocalStorage();
-
   const [workouts, setWorkouts] = useState(initialWorkouts);
   const [showAddWorkout, setShowAddWorkout] = useState(false);
   const [showFormAddExercise, setShowFormAddExercise] = useState(false);
@@ -111,8 +110,6 @@ function App() {
   function handleAddWorkout(newWorkout) {
     setWorkouts((workouts) => [...workouts, newWorkout]);
     setShowAddWorkout(false);
-
-    setLocalStorage();
   }
 
   function handleSetShowFormAddExercises() {
@@ -134,34 +131,23 @@ function App() {
   function handleCleanWorkouts() {
     initialWorkouts = [];
     setWorkouts(initialWorkouts);
-
-    setLocalStorage();
-  }
-
-  // --------------------- Get & Set Local Storage ---------------------------
-
-  function setLocalStorage() {
-    localStorage.setItem("initialWorkouts", JSON.stringify(workouts));
-  }
-
-  function getLocalStorage() {
-    const data = JSON.parse(localStorage.getItem("initialWorkouts"));
-
-    if (!data) return;
-
-    initialWorkouts = data;
   }
 
   return (
     <div className="app">
       <div className="sidebar">
         <Logo>Workouts</Logo>
-        <WorkoutList
-          workouts={workouts}
-          selectedWorkout={selectedWorkout}
-          onSelection={handleSelection}
-          // onShowFormAddExercises={handleShowFormAddExercises}
-        />
+        <WorkoutList>
+          {" "}
+          {workouts.map((workout) => (
+            <Workout
+              key={workout.id}
+              workout={workout}
+              onSelection={handleSelection}
+              selectedWorkout={selectedWorkout}
+            />
+          ))}
+        </WorkoutList>
         {showAddWorkout && <FormAddWorkout onAddWorkout={handleAddWorkout} />}
         <Button
           classStyle={"button-gray mb--16"}

@@ -1,7 +1,11 @@
 import { useState } from "react";
 
-function Serie({ num, initialReps, initialPeso }) {
-  console.log(initialPeso);
+function Serie({ num, set }) {
+  const initialReps = set.reps;
+  const initialPeso = set.peso;
+
+  // console.log(initialPeso);
+
   const [reps, setReps] = useState(initialReps);
   const [peso, setPeso] = useState(initialPeso);
 

@@ -3,21 +3,21 @@ import { Circle } from "@phosphor-icons/react";
 import Set from "./Set";
 import { useState } from "react";
 
-function Exercise({ exercise, title, sets, selectedWorkout }) {
+function Exercise({ exercise, selectedWorkout }) {
   // const sets = selectedWorkout.exercises;
   // console.log(sets);
   // console.log("////////////////////////////////");
 
   // const sets = [{}];
 
-  console.log(exercise);
-  console.log(sets);
+  // console.log(exercise);
+  // console.log(exercise.sets);
 
   return (
     <li className="exercise">
       <div className="exercise-title">
         <Circle weight="bold" size={28} />
-        <h2>{title}</h2>
+        <h2>{exercise.title}</h2>
       </div>
 
       <div>
@@ -26,13 +26,8 @@ function Exercise({ exercise, title, sets, selectedWorkout }) {
           <p>Weight</p>
         </div>
         <ul>
-          {sets.map((set, i) => (
-            <Set
-              num={i}
-              key={set.setId}
-              initialReps={set.reps}
-              initialPeso={set.peso}
-            ></Set>
+          {exercise.sets.map((set, i) => (
+            <Set key={set.setId} num={i} set={set}></Set>
           ))}
           {/* <Button classStyle={"button-serie"}>+</Button> */}
         </ul>
