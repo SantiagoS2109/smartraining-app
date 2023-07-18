@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer } from "react";
 
 import Logo from "./Logo";
 import WorkoutList from "./WorkoutList";
@@ -95,43 +95,123 @@ import Workout from "./Workout";
 //   ],
 // },
 
-let initialWorkouts = [];
+let initialWorkouts = {
+  showAddWorkout: false,
+  showFormAddExercise: false,
+  selectedWorkout: null,
+
+  titleExercise: "",
+
+  workouts: [],
+};
+
+function generateId() {
+  return crypto.randomUUID();
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "setShowAddWorkout":
+      return {
+        ...state,
+        showAddWorkout: !state.showAddWorkout,
+      };
+    case "setShowFormAddExercise":
+      return {
+        ...state,
+        showFormAddExercise: !state.showFormAddExercise,
+      };
+    case "setSelectedWorkout":
+      return {
+        ...state,
+        selectedWorkout:
+          state.selectedWorkout?.id === action.payload.id
+            ? null
+            : action.payload,
+        showAddWorkout: state.showAddWorkout && false,
+      };
+    case "addWorkout":
+      return {
+        ...state,
+        workouts: [...state.workouts, action.payload],
+        showAddWorkout: false,
+      };
+    case "addExercise":
+      const newExercise = {
+        exerciseId: generateId(),
+        title: action.payload,
+        sets: [
+          {
+            setId: 1,
+            reps: 12,
+            peso: 5,
+          },
+          {
+            setId: 2,
+            reps: 10,
+            peso: 7,
+          },
+          {
+            setId: 3,
+            reps: 8,
+            peso: 9,
+          },
+          {
+            setId: 4,
+            reps: 6,
+            peso: 10,
+          },
+        ],
+      };
+
+      const updatedExercises = state.workouts.map((workout) =>
+        workout.id === state.selectedWorkout.id
+          ? {
+              ...workout,
+              exercises: [...workout.exercises, newExercise],
+            }
+          : workout
+      );
+
+      return {
+        ...state,
+        workouts: updatedExercises,
+        showFormAddExercise: false,
+        titleExercise: "",
+      };
+    case "cleanWorkouts":
+      const confirm = window.confirm(
+        "Are you sure you want to clean up all your workouts? 🧹"
+      );
+
+      if (!confirm) return state;
+
+      return {
+        ...initialWorkouts,
+      };
+
+    case "setTitleExercise":
+      return {
+        ...state,
+        titleExercise: action.payload,
+      };
+
+    default:
+      throw new Error("Unknown acton");
+  }
+}
 
 function App() {
-  const [workouts, setWorkouts] = useState(initialWorkouts);
-  const [showAddWorkout, setShowAddWorkout] = useState(false);
-  const [showFormAddExercise, setShowFormAddExercise] = useState(false);
-  const [selectedWorkout, setSelectedWorkout] = useState(null);
-
-  function handleShowAddWorkout() {
-    setShowAddWorkout((show) => !show);
-  }
-
-  function handleAddWorkout(newWorkout) {
-    setWorkouts((workouts) => [...workouts, newWorkout]);
-    setShowAddWorkout(false);
-  }
-
-  function handleSetShowFormAddExercises() {
-    setShowFormAddExercise((show) => !show);
-  }
-
-  function handleSelection(workout) {
-    setSelectedWorkout((cur) => (cur?.id === workout.id ? null : workout));
-
-    showAddWorkout && setShowAddWorkout(false);
-
-    workout.exercises.length === 0 && setShowFormAddExercise(true);
-  }
-
-  function generateId() {
-    return crypto.randomUUID();
-  }
-
-  function handleCleanWorkouts() {
-    initialWorkouts = [];
-    setWorkouts(initialWorkouts);
-  }
+  const [
+    {
+      workouts,
+      showAddWorkout,
+      showFormAddExercise,
+      selectedWorkout,
+      titleExercise,
+    },
+    dispatch,
+  ] = useReducer(reducer, initialWorkouts);
 
   return (
     <div className="app">
@@ -143,20 +223,23 @@ function App() {
             <Workout
               key={workout.id}
               workout={workout}
-              onSelection={handleSelection}
+              dispatch={dispatch}
               selectedWorkout={selectedWorkout}
             />
           ))}
         </WorkoutList>
-        {showAddWorkout && <FormAddWorkout onAddWorkout={handleAddWorkout} />}
+        {showAddWorkout && <FormAddWorkout dispatch={dispatch} />}
         <Button
           classStyle={"button-gray mb--16"}
-          onClick={handleShowAddWorkout}
+          onClick={() => dispatch({ type: "setShowAddWorkout" })}
         >
           {!showAddWorkout ? "Nueva sesión" : "Cerrar"}
         </Button>
         {workouts.length >= 1 && (
-          <Button classStyle={"button-limpiar"} onClick={handleCleanWorkouts}>
+          <Button
+            classStyle={"button-limpiar"}
+            onClick={() => dispatch({ type: "cleanWorkouts" })}
+          >
             Limpiar sesiones
           </Button>
         )}
@@ -165,11 +248,10 @@ function App() {
         <ExerciseList
           workouts={workouts}
           showFormAddExercise={showFormAddExercise}
-          onShowFormAddExercise={handleSetShowFormAddExercises}
           selectedWorkout={selectedWorkout}
-          setSelectedWorkout={setSelectedWorkout}
           generateId={generateId}
-          setWorkouts={setWorkouts}
+          dispatch={dispatch}
+          titleExercise={titleExercise}
         />
       )}
     </div>

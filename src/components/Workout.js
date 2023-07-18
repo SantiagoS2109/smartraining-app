@@ -1,7 +1,7 @@
 import { Barbell } from "@phosphor-icons/react";
 import Button from "./Button";
 
-function Workout({ workout, onSelection, selectedWorkout }) {
+function Workout({ workout, onSelection, selectedWorkout, dispatch }) {
   const isSelected = selectedWorkout?.id === workout.id;
 
   return (
@@ -14,7 +14,12 @@ function Workout({ workout, onSelection, selectedWorkout }) {
         <span>{workout.date}</span>
       </div>
       <div className="button">
-        <Button onClick={() => onSelection(workout)}>
+        <Button
+          onClick={
+            () => dispatch({ type: "setSelectedWorkout", payload: workout })
+            // onSelection(workout)
+          }
+        >
           {isSelected ? "Close" : "Select"}
         </Button>
       </div>

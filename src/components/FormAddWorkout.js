@@ -3,7 +3,7 @@ import { useState } from "react";
 import Logo from "./Logo";
 import Button from "./Button";
 
-function FormAddWorkout({ onAddWorkout }) {
+function FormAddWorkout({ onAddWorkout, dispatch }) {
   const [muscle, setMuscle] = useState("");
   const [date, setDate] = useState("");
 
@@ -37,7 +37,8 @@ function FormAddWorkout({ onAddWorkout }) {
       ],
     };
 
-    onAddWorkout(newWorkout);
+    dispatch({ type: "addWorkout", payload: newWorkout });
+    // onAddWorkout(newWorkout);
   }
 
   return (
