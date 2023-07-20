@@ -1,9 +1,8 @@
 import { Barbell, Calendar } from "@phosphor-icons/react";
 import { useState } from "react";
-import Logo from "./Logo";
 import Button from "./Button";
 
-function FormAddWorkout({ onAddWorkout, dispatch }) {
+function FormAddWorkout({ dispatch }) {
   const [muscle, setMuscle] = useState("");
   const [date, setDate] = useState("");
 
@@ -14,59 +13,45 @@ function FormAddWorkout({ onAddWorkout, dispatch }) {
 
     const id = crypto.randomUUID();
 
-    function generateId() {
-      return crypto.randomUUID();
-    }
-
     const newWorkout = {
       id,
       muscle,
       date,
-      exercises: [
-        // {
-        //   exerciseId: generateId(),
-        //   exercise: "X",
-        //   series: [
-        //     {
-        //       seriesId: generateId(),
-        //       reps: 0,
-        //       peso: 0,
-        //     },
-        //   ],
-        // },
-      ],
+      exercises: [],
     };
 
     dispatch({ type: "addWorkout", payload: newWorkout });
-    // onAddWorkout(newWorkout);
   }
 
   return (
     <div className="form-add form-add-workout">
-      <Logo>Workout Session</Logo>
+      <h1 className="heading sub--heading">New Workout Session</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit}>
         <div className="form-input">
           <div>
-            <Barbell size={32} />
-            <label>Grupo muscular</label>
+            <Barbell size={32} weight="fill" />
+            <label>Muscle group</label>
           </div>
           <div className="select">
-            <select value={muscle} onChange={(e) => setMuscle(e.target.value)}>
-              <option value={""}></option>
+            <input
+              type="text"
+              value={muscle}
+              onChange={(e) => setMuscle(e.target.value)}
+            >
+              {/* <option value={""}></option>
               <option value={"Chest"}>Chest</option>
               <option value={"Back"}>Back</option>
               <option value={"Bicep"}>Bicep</option>
               <option value={"Tricep"}>Tricep</option>
-              <option value={"Quads"}>Quads</option>
-            </select>
-            {/* <Button classStyle={"button-plus"}>+</Button> */}
+              <option value={"Quads"}>Quads</option> */}
+            </input>
           </div>
         </div>
         <div className="form-input">
           <div>
-            <Calendar size={32} />
-            <label>Fecha</label>
+            <Calendar size={32} weight="fill" />
+            <label>Date</label>
           </div>
           <div className="select">
             <input
@@ -76,7 +61,7 @@ function FormAddWorkout({ onAddWorkout, dispatch }) {
             ></input>
           </div>
         </div>
-        <Button>Añadir</Button>
+        <Button classStyle={"btn--add"}>Add</Button>
       </form>
     </div>
   );

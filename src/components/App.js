@@ -6,8 +6,10 @@ import Button from "./Button";
 import ExerciseList from "./ExerciseList";
 import FormAddWorkout from "./FormAddWorkout";
 import Workout from "./Workout";
+import Footer from "./Footer";
+import { useLocalStorageState } from "./useLocalStorageState";
 
-let initialWorkouts = {
+let initialState = {
   showAddWorkout: false,
   showFormAddExercise: false,
   selectedWorkout: null,
@@ -43,12 +45,14 @@ function reducer(state, action) {
             : action.payload,
         showAddWorkout: state.showAddWorkout && false,
       };
+
     case "addWorkout":
       return {
         ...state,
         workouts: [...state.workouts, action.payload],
         showAddWorkout: false,
       };
+
     case "addExercise":
       const newExercise = {
         exerciseId: generateId(),
@@ -92,6 +96,7 @@ function reducer(state, action) {
         showFormAddExercise: false,
         titleExercise: "",
       };
+
     case "cleanWorkouts":
       const confirm = window.confirm(
         "Are you sure you want to clean up all your workouts? 🧹"
@@ -100,7 +105,7 @@ function reducer(state, action) {
       if (!confirm) return state;
 
       return {
-        ...initialWorkouts,
+        ...initialState,
       };
 
     case "deleteWorkout":
@@ -197,6 +202,11 @@ function reducer(state, action) {
 }
 
 function App() {
+  const [storedWorkouts, setStoredWorkouts] = useLocalStorageState(
+    [],
+    "workouts"
+  );
+
   const [
     {
       workouts,
@@ -206,50 +216,56 @@ function App() {
       titleExercise,
     },
     dispatch,
-  ] = useReducer(reducer, initialWorkouts);
+  ] = useReducer(reducer, initialState);
 
   return (
     <div className="app">
-      <div className="sidebar">
-        <Logo>Workouts</Logo>
-        <WorkoutList>
-          {" "}
-          {workouts.map((workout) => (
-            <Workout
-              key={workout.id}
-              workoutId={workout.id}
-              workout={workout}
-              dispatch={dispatch}
-              selectedWorkout={selectedWorkout}
-            />
-          ))}
-        </WorkoutList>
-        {showAddWorkout && <FormAddWorkout dispatch={dispatch} />}
-        <Button
-          classStyle={"button-gray mb--16"}
-          onClick={() => dispatch({ type: "setShowAddWorkout" })}
-        >
-          {!showAddWorkout ? "Nueva sesión" : "Cerrar"}
-        </Button>
-        {workouts.length >= 1 && (
+      <Logo />
+      <main className="app-content">
+        <div className="sidebar">
+          <h1 className="heading">Your Workouts</h1>
+          <div className="workout-list">
+            <WorkoutList>
+              {" "}
+              {workouts.map((workout) => (
+                <Workout
+                  key={workout.id}
+                  workoutId={workout.id}
+                  workout={workout}
+                  dispatch={dispatch}
+                  selectedWorkout={selectedWorkout}
+                />
+              ))}
+            </WorkoutList>
+          </div>
+          {showAddWorkout && <FormAddWorkout dispatch={dispatch} />}
           <Button
-            classStyle={"button-limpiar"}
-            onClick={() => dispatch({ type: "cleanWorkouts" })}
+            classStyle={"button-gray mb--16"}
+            onClick={() => dispatch({ type: "setShowAddWorkout" })}
           >
-            Limpiar sesiones
+            {!showAddWorkout ? "New session" : "Close"}
           </Button>
+          {workouts.length >= 1 && (
+            <Button
+              classStyle={"button-limpiar"}
+              onClick={() => dispatch({ type: "cleanWorkouts" })}
+            >
+              Delete all sessions
+            </Button>
+          )}
+        </div>
+        {selectedWorkout && (
+          <ExerciseList
+            workouts={workouts}
+            showFormAddExercise={showFormAddExercise}
+            selectedWorkout={selectedWorkout}
+            generateId={generateId}
+            dispatch={dispatch}
+            titleExercise={titleExercise}
+          />
         )}
-      </div>
-      {selectedWorkout && (
-        <ExerciseList
-          workouts={workouts}
-          showFormAddExercise={showFormAddExercise}
-          selectedWorkout={selectedWorkout}
-          generateId={generateId}
-          dispatch={dispatch}
-          titleExercise={titleExercise}
-        />
-      )}
+      </main>
+      <Footer />
     </div>
   );
 }

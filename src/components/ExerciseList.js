@@ -18,7 +18,7 @@ function ExerciseList({
     <div className="exercises">
       <div className="form-add form-add-exercise">
         <div className="exercises-title">
-          <Logo>{`${selectedWorkout.muscle} workout`}</Logo>
+          <h1 className="heading">{`${selectedWorkout.muscle} workout`}</h1>
           <span>{selectedWorkout.date}</span>
         </div>
         <ul className="exercises-list">

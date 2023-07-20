@@ -1,7 +1,9 @@
-function Logo({ children }) {
+import logo from "../img/Logo.svg";
+
+function Logo() {
   return (
     <div className="logo">
-      <h1>{children}</h1>
+      <img src={logo} alt="SmartTrain Logo"></img>
     </div>
   );
 }
