@@ -1,34 +1,29 @@
-import { useState } from "react";
-
-function Serie({ num, set }) {
+function Serie({ index, set, dispatch, exerciseId }) {
   const initialReps = set.reps;
-  const initialPeso = set.peso;
-
-  // console.log(initialPeso);
-
-  const [reps, setReps] = useState(initialReps);
-  const [peso, setPeso] = useState(initialPeso);
-
-  function handleSetReps(newReps) {
-    setReps(newReps);
-  }
-
-  function handleSetPeso(newPeso) {
-    setPeso(newPeso);
-  }
+  const initialPeso = set.weight;
 
   return (
     <li>
-      <p>Set #{num + 1}:</p>
+      <p>Set #{index + 1}:</p>
       <input
         type="text"
-        value={reps}
-        onChange={(e) => handleSetReps(Number(e.target.value))}
+        value={initialReps}
+        onChange={(e) =>
+          dispatch({
+            type: "setReps",
+            payload: { reps: Number(e.target.value), index, exerciseId },
+          })
+        }
       ></input>
       <input
         type="text"
-        value={peso}
-        onChange={(e) => handleSetPeso(Number(e.target.value))}
+        value={initialPeso}
+        onChange={(e) =>
+          dispatch({
+            type: "setWeight",
+            payload: { weight: Number(e.target.value), index, exerciseId },
+          })
+        }
       ></input>
     </li>
   );

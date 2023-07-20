@@ -10,6 +10,10 @@ function ExerciseList({
   titleExercise,
   dispatch,
 }) {
+  const curWorkout = workouts
+    .map((workout) => workout.id === selectedWorkout.id && workout)
+    .filter((workout) => workout !== false);
+
   return (
     <div className="exercises">
       <div className="form-add form-add-exercise">
@@ -18,17 +22,14 @@ function ExerciseList({
           <span>{selectedWorkout.date}</span>
         </div>
         <ul className="exercises-list">
-          {workouts.map(
-            (workout) =>
-              workout.id === selectedWorkout.id &&
-              workout.exercises.map((exercise) => (
-                <Exercise
-                  key={exercise.exerciseId}
-                  exercise={exercise}
-                  selectedWorkout={selectedWorkout}
-                />
-              ))
-          )}
+          {curWorkout[0].exercises?.map((exercise) => (
+            <Exercise
+              dispatch={dispatch}
+              key={exercise.exerciseId}
+              exercise={exercise}
+              selectedWorkout={selectedWorkout}
+            />
+          ))}
         </ul>
         {showFormAddExercise && (
           <FormAddExercise titleExercise={titleExercise} dispatch={dispatch} />

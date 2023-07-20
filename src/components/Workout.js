@@ -1,7 +1,7 @@
 import { Barbell } from "@phosphor-icons/react";
 import Button from "./Button";
 
-function Workout({ workout, onSelection, selectedWorkout, dispatch }) {
+function Workout({ workout, selectedWorkout, dispatch, workoutId }) {
   const isSelected = selectedWorkout?.id === workout.id;
 
   return (
@@ -13,15 +13,25 @@ function Workout({ workout, onSelection, selectedWorkout, dispatch }) {
         <span>{workout.muscle}</span>
         <span>{workout.date}</span>
       </div>
-      <div className="button">
+      <div className="btns-container">
         <Button
-          onClick={
-            () => dispatch({ type: "setSelectedWorkout", payload: workout })
-            // onSelection(workout)
+          classStyle={"button"}
+          onClick={() =>
+            dispatch({ type: "setSelectedWorkout", payload: workout })
           }
         >
           {isSelected ? "Close" : "Select"}
         </Button>
+        {selectedWorkout?.id !== workout.id && (
+          <Button
+            classStyle={"btn-delete"}
+            onClick={() =>
+              dispatch({ type: "deleteWorkout", payload: workoutId })
+            }
+          >
+            X
+          </Button>
+        )}
       </div>
     </li>
   );

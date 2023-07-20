@@ -7,94 +7,6 @@ import ExerciseList from "./ExerciseList";
 import FormAddWorkout from "./FormAddWorkout";
 import Workout from "./Workout";
 
-// {
-//   id: 118836,
-//   muscle: "Upper Body",
-//   date: "02/06/23",
-//   exercises: [
-//     {
-//       exerciseId: 1,
-//       exercise: "Push-Ups",
-//       series: [
-//         {
-//           seriesId: 1,
-//           reps: 12,
-//           peso: 5,
-//         },
-//       ],
-//     },
-//     // {
-//     //   exerciseId: 2,
-//     //   exercise: "Pull-Ups",
-//     //   series: [
-//     //     {
-//     //       seriesId: 1,
-//     //       reps: 10,
-//     //       peso: 10,
-//     //     },
-//     //   ],
-//     // },
-//   ],
-// },
-// {
-//   id: 933372,
-//   muscle: "Lower Body",
-//   date: "03/06/23",
-//   exercises: [
-//     {
-//       exerciseId: 1,
-//       exercise: "Quads",
-//       series: [
-//         {
-//           seriesId: 1,
-//           reps: 12,
-//           peso: 5,
-//         },
-//       ],
-//     },
-//     // {
-//     //   exerciseId: 2,
-//     //   exercise: "Leg Extension",
-//     //   series: [
-//     //     {
-//     //       seriesId: 1,
-//     //       reps: 10,
-//     //       peso: 10,
-//     //     },
-//     //   ],
-//     // },
-//   ],
-// },
-// {
-//   id: 499476,
-//   muscle: "Cardio",
-//   date: "12/06/23",
-//   exercises: [
-//     {
-//       exerciseId: 1,
-//       exercise: "Run",
-//       series: [
-//         {
-//           seriesId: 1,
-//           reps: 12,
-//           peso: 5,
-//         },
-//       ],
-//     },
-//     // {
-//     //   exerciseId: 2,
-//     //   exercise: "Rope Jump",
-//     //   series: [
-//     //     {
-//     //       seriesId: 1,
-//     //       reps: 10,
-//     //       peso: 10,
-//     //     },
-//     //   ],
-//     // },
-//   ],
-// },
-
 let initialWorkouts = {
   showAddWorkout: false,
   showFormAddExercise: false,
@@ -115,6 +27,7 @@ function reducer(state, action) {
       return {
         ...state,
         showAddWorkout: !state.showAddWorkout,
+        selectedWorkout: state.selectedWorkout === true && null,
       };
     case "setShowFormAddExercise":
       return {
@@ -143,23 +56,23 @@ function reducer(state, action) {
         sets: [
           {
             setId: 1,
-            reps: 12,
-            peso: 5,
+            reps: 0,
+            weight: 0,
           },
           {
             setId: 2,
-            reps: 10,
-            peso: 7,
+            reps: 0,
+            weight: 0,
           },
           {
             setId: 3,
-            reps: 8,
-            peso: 9,
+            reps: 0,
+            weight: 0,
           },
           {
             setId: 4,
-            reps: 6,
-            peso: 10,
+            reps: 0,
+            weight: 0,
           },
         ],
       };
@@ -188,6 +101,88 @@ function reducer(state, action) {
 
       return {
         ...initialWorkouts,
+      };
+
+    case "deleteWorkout":
+      return {
+        ...state,
+        workouts: state.workouts.filter(
+          (workout) => workout.id !== action.payload
+        ),
+      };
+
+    case "deleteExercise":
+      const updatedDeletedExercises = state.workouts.map((workout) =>
+        workout.id === state.selectedWorkout.id
+          ? {
+              ...workout,
+              exercises: workout.exercises.filter(
+                (exercise) => exercise.exerciseId !== action.payload
+              ),
+            }
+          : workout
+      );
+      return {
+        ...state,
+        workouts: updatedDeletedExercises,
+      };
+
+    case "setReps":
+      const newReps = state.workouts.map((workout) =>
+        workout.id === state.selectedWorkout.id
+          ? {
+              ...workout,
+              exercises: workout.exercises.map((exercise) =>
+                exercise.exerciseId === action.payload.exerciseId
+                  ? {
+                      ...exercise,
+                      sets: exercise.sets.map((set, i) =>
+                        i === action.payload.index
+                          ? {
+                              ...set,
+                              reps: action.payload.reps,
+                            }
+                          : set
+                      ),
+                    }
+                  : exercise
+              ),
+            }
+          : workout
+      );
+
+      return {
+        ...state,
+        workouts: newReps,
+      };
+
+    case "setWeight":
+      const newWeights = state.workouts.map((workout) =>
+        workout.id === state.selectedWorkout.id
+          ? {
+              ...workout,
+              exercises: workout.exercises.map((exercise) =>
+                exercise.exerciseId === action.payload.exerciseId
+                  ? {
+                      ...exercise,
+                      sets: exercise.sets.map((set, i) =>
+                        i === action.payload.index
+                          ? {
+                              ...set,
+                              weight: action.payload.weight,
+                            }
+                          : set
+                      ),
+                    }
+                  : exercise
+              ),
+            }
+          : workout
+      );
+
+      return {
+        ...state,
+        workouts: newWeights,
       };
 
     case "setTitleExercise":
@@ -222,6 +217,7 @@ function App() {
           {workouts.map((workout) => (
             <Workout
               key={workout.id}
+              workoutId={workout.id}
               workout={workout}
               dispatch={dispatch}
               selectedWorkout={selectedWorkout}

@@ -108,11 +108,13 @@ body {
 .button {
   background-color: var(--color-dark);
   color: var(--color-light);
-  padding: 0.4rem 0.8rem;
+  padding: 0.8rem 1.2rem;
   border: none;
   border-radius: 7px;
   cursor: pointer;
   transition: 0.3s;
+
+  font-size: 1.4rem;
 }
 
 .button:hover {
@@ -286,12 +288,22 @@ select {
   padding: 1.2rem;
 
   margin-bottom: 1.2rem;
+
+  position: relative;
 }
 
 .exercise-title {
   display: flex;
   align-items: center;
   gap: 0.8rem;
+}
+
+.exercise-sidebar button {
+  font-size: 1rem;
+  position: absolute;
+
+  top: 1rem;
+  left: 1rem;
 }
 
 .exercise ul {
@@ -366,4 +378,22 @@ select {
 .button-limpiar:hover {
   background-color: #3a3d42;
   color: #fff;
+}
+
+.btn-delete {
+  border-radius: 50%;
+  background-color: var(--color-light);
+  color: #3a3d42;
+
+  font-size: 1rem;
+}
+
+.btn-delete:hover {
+  background-color: #c92a2a;
+  color: var(--color-light);
+}
+
+.btns-container {
+  display: flex;
+  gap: 1.2rem;
 }
