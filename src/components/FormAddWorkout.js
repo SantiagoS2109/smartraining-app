@@ -37,6 +37,7 @@ function FormAddWorkout({ dispatch }) {
             name="muscle"
             type="text"
             value={muscle}
+            required
             onChange={(e) => setMuscle(e.target.value)}
           ></input>
         </div>
@@ -49,6 +50,7 @@ function FormAddWorkout({ dispatch }) {
             name="date"
             type="date"
             value={date}
+            required
             onChange={(e) => setDate(e.target.value)}
           ></input>
         </div>

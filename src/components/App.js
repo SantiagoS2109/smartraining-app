@@ -46,9 +46,8 @@ function reducer(state, action) {
             ? null
             : action.payload,
         showAddWorkout: state.showAddWorkout && false,
-        showFormAddExercise: state.showFormAddExercise
-          ? false
-          : state.showFormAddExercise,
+        showFormAddExercise:
+          action.payload.exercises.length === 0 ? true : false,
       };
 
     case "addWorkout":
