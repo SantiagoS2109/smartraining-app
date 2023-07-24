@@ -6,7 +6,8 @@ function Serie({ index, set, dispatch, exerciseId }) {
     <li>
       <p>Set #{index + 1}:</p>
       <input
-        type="text"
+        className="set-values"
+        type="number"
         value={initialReps}
         onChange={(e) =>
           dispatch({
@@ -16,7 +17,8 @@ function Serie({ index, set, dispatch, exerciseId }) {
         }
       ></input>
       <input
-        type="text"
+        className="set-values"
+        type="number"
         value={initialPeso}
         onChange={(e) =>
           dispatch({

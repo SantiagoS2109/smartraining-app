@@ -7,7 +7,8 @@ import ExerciseList from "./ExerciseList";
 import FormAddWorkout from "./FormAddWorkout";
 import Workout from "./Workout";
 import Footer from "./Footer";
-import { useLocalStorageState } from "./useLocalStorageState";
+
+const storedData = localStorage.getItem("workouts");
 
 let initialState = {
   showAddWorkout: false,
@@ -17,7 +18,7 @@ let initialState = {
   titleExercise: "",
   title: "SmarTraining | Your Workout Tracker",
 
-  workouts: [],
+  workouts: storedData ? JSON.parse(storedData) : [],
 };
 
 function generateId() {
@@ -45,6 +46,9 @@ function reducer(state, action) {
             ? null
             : action.payload,
         showAddWorkout: state.showAddWorkout && false,
+        showFormAddExercise: state.showFormAddExercise
+          ? false
+          : state.showFormAddExercise,
       };
 
     case "addWorkout":
@@ -106,7 +110,8 @@ function reducer(state, action) {
       if (!confirm) return state;
 
       return {
-        ...initialState,
+        ...state,
+        workouts: [],
       };
 
     case "deleteWorkout":
@@ -203,11 +208,6 @@ function reducer(state, action) {
 }
 
 function App() {
-  // const [storedWorkouts, setStoredWorkouts] = useLocalStorageState(
-  //   [],
-  //   "workouts"
-  // );
-
   const [
     {
       workouts,
@@ -215,19 +215,17 @@ function App() {
       showFormAddExercise,
       selectedWorkout,
       titleExercise,
-      title,
+      // title,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
 
-  // useEffect(
-  //   function () {
-  //     document.title = `${title}`;
-
-  //     return () => (document.title = "SmarTraining | Your Workout Tracker");
-  //   },
-  //   [title]
-  // );
+  useEffect(
+    function () {
+      localStorage.setItem("workouts", JSON.stringify(workouts));
+    },
+    [workouts]
+  );
 
   return (
     <div className="app">
