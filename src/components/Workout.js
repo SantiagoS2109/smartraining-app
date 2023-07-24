@@ -7,7 +7,7 @@ function Workout({ workout, selectedWorkout, dispatch, workoutId }) {
   return (
     <li className={isSelected ? "selected" : ""}>
       <div className="icon">
-        <Barbell color="#484C52" weight="fill" size={42} />
+        <Barbell color="#484C52" weight="fill" size={32} />
       </div>
       <div className="info">
         <span>{workout.muscle}</span>
@@ -22,16 +22,15 @@ function Workout({ workout, selectedWorkout, dispatch, workoutId }) {
         >
           {isSelected ? "Close" : "Select"}
         </Button>
-        {selectedWorkout?.id !== workout.id && (
-          <Button
-            classStyle={"btn-delete"}
-            onClick={() =>
-              dispatch({ type: "deleteWorkout", payload: workoutId })
-            }
-          >
-            X
-          </Button>
-        )}
+        <Button
+          classStyle={"btn-delete"}
+          onClick={() =>
+            dispatch({ type: "deleteWorkout", payload: workoutId })
+          }
+          btnDisabled={selectedWorkout?.id === workout.id && "true"}
+        >
+          X
+        </Button>
       </div>
     </li>
   );

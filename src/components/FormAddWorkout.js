@@ -29,37 +29,28 @@ function FormAddWorkout({ dispatch }) {
 
       <form className="form" onSubmit={handleSubmit}>
         <div className="form-input">
-          <div>
-            <Barbell size={32} weight="fill" />
-            <label>Muscle group</label>
-          </div>
-          <div className="select">
-            <input
-              type="text"
-              value={muscle}
-              onChange={(e) => setMuscle(e.target.value)}
-            >
-              {/* <option value={""}></option>
-              <option value={"Chest"}>Chest</option>
-              <option value={"Back"}>Back</option>
-              <option value={"Bicep"}>Bicep</option>
-              <option value={"Tricep"}>Tricep</option>
-              <option value={"Quads"}>Quads</option> */}
-            </input>
-          </div>
+          <Barbell size={24} weight="fill" />
+          <label className="form-input--label" htmlFor="muscle">
+            Muscle group
+          </label>
+          <input
+            name="muscle"
+            type="text"
+            value={muscle}
+            onChange={(e) => setMuscle(e.target.value)}
+          ></input>
         </div>
         <div className="form-input">
-          <div>
-            <Calendar size={32} weight="fill" />
-            <label>Date</label>
-          </div>
-          <div className="select">
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            ></input>
-          </div>
+          <Calendar size={24} weight="fill" />
+          <label className="form-input--label" htmlFor="date">
+            Date
+          </label>
+          <input
+            name="date"
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          ></input>
         </div>
         <Button classStyle={"btn--add"}>Add</Button>
       </form>

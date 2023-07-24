@@ -1,6 +1,12 @@
-function Button({ children, classStyle, onClick }) {
+function Button({ children, classStyle, onClick, btnDisabled }) {
+  const disabled = btnDisabled;
+
   return (
-    <button onClick={onClick} className={`button ${classStyle}`}>
+    <button
+      onClick={onClick}
+      className={`button ${classStyle}`}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

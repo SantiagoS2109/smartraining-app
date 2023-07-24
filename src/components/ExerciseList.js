@@ -38,7 +38,7 @@ function ExerciseList({
           classStyle={"button-exercise"}
           onClick={() => dispatch({ type: "setShowFormAddExercise" })}
         >
-          {showFormAddExercise ? "Cerrar" : "Agregar ejercicio"}
+          {showFormAddExercise ? "Close" : "Add exercise"}
         </Button>
       </div>
     </div>

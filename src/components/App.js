@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 
 import Logo from "./Logo";
 import WorkoutList from "./WorkoutList";
@@ -15,6 +15,7 @@ let initialState = {
   selectedWorkout: null,
 
   titleExercise: "",
+  title: "SmarTraining | Your Workout Tracker",
 
   workouts: [],
 };
@@ -202,10 +203,10 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [storedWorkouts, setStoredWorkouts] = useLocalStorageState(
-    [],
-    "workouts"
-  );
+  // const [storedWorkouts, setStoredWorkouts] = useLocalStorageState(
+  //   [],
+  //   "workouts"
+  // );
 
   const [
     {
@@ -214,9 +215,19 @@ function App() {
       showFormAddExercise,
       selectedWorkout,
       titleExercise,
+      title,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
+
+  // useEffect(
+  //   function () {
+  //     document.title = `${title}`;
+
+  //     return () => (document.title = "SmarTraining | Your Workout Tracker");
+  //   },
+  //   [title]
+  // );
 
   return (
     <div className="app">
@@ -224,7 +235,7 @@ function App() {
       <main className="app-content">
         <div className="sidebar">
           <h1 className="heading">Your Workouts</h1>
-          <div className="workout-list">
+          <div className={`workout-list ${workouts.length === 0 && "hidden"}`}>
             <WorkoutList>
               {" "}
               {workouts.map((workout) => (
@@ -245,7 +256,7 @@ function App() {
           >
             {!showAddWorkout ? "New session" : "Close"}
           </Button>
-          {workouts.length >= 1 && (
+          {workouts.length >= 2 && (
             <Button
               classStyle={"button-limpiar"}
               onClick={() => dispatch({ type: "cleanWorkouts" })}

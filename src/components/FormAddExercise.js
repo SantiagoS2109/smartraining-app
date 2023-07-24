@@ -18,7 +18,7 @@ export default function FormAddExercise({ titleExercise, dispatch }) {
             dispatch({ type: "setTitleExercise", payload: e.target.value })
           }
         ></input>
-        <Button classStyle={"no-mg"}>
+        <Button classStyle={"no-mg btn-send"}>
           <CaretRight weight="bold" size={18} />
         </Button>
       </form>

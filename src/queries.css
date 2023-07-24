@@ -1,0 +1,48 @@
+/**********************/
+/* BELOW 768px (Tablet) */
+/**********************/
+
+@media (width <= 48em) {
+  .app-content {
+    grid-template-columns: 35rem 35rem;
+    column-gap: 2rem;
+  }
+}
+
+/**********************/
+/* BELOW 688px (Tablet) */
+/**********************/
+
+@media (width <= 43em) {
+  .app-content {
+    grid-template-columns: 33rem 33rem;
+    column-gap: 1rem;
+  }
+
+  .exercises {
+    width: 100%;
+  }
+
+  .sidebar li {
+    grid-template-columns: auto 10rem auto;
+  }
+}
+
+/**********************/
+/* BELOW 414px (Mobile L) */
+/**********************/
+
+@media (width <= 25.88em) {
+  .app-content {
+    grid-template-columns: 35rem;
+  }
+
+  .exercises {
+    /* width: 100%; */
+    justify-self: center;
+  }
+
+  .workout-list {
+    max-height: calc(100vh - 46rem);
+  }
+}
