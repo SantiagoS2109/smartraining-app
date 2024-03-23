@@ -4,7 +4,7 @@ function Button({ children, classStyle, onClick, btnDisabled }) {
   return (
     <button
       onClick={onClick}
-      className={`button ${classStyle}`}
+      className={`button ${classStyle} bg-gray-200 hover:bg-gray-300`}
       disabled={disabled}
     >
       {children}

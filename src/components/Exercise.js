@@ -14,6 +14,7 @@ function Exercise({ exercise, dispatch }) {
         >
           X
         </Button>
+
         <div className="exercise-title">
           <Circle weight="bold" size={28} />
           <h2>{exercise.title}</h2>
